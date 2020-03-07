@@ -11,6 +11,44 @@ const breadditController = (req, res) => {
   });
 };
 
+const getBreadditById = (req, res) => {
+  const breadditId = req.params.id;
+
+  const posts = breadditdata.find(post => post.id === breadditId);
+
+  if (posts) {
+    return res.json(posts);
+  } else {
+    res.status(404).send("Breaddit not found!");
+  }
+};
+const updateBreaddit = (req, res) => {
+  const breadditId = req.params.id;
+  const breaddit = req.body;
+  const posts = breadditdata.find(post => post.id === breadditId);
+
+  const filteredPosts = breadditdata.filter(post => post.id !== breadditId);
+  const updatedPosts = [...filteredPosts, breaddit];
+
+  if (posts) {
+    return res.json(updatedPosts);
+  } else {
+    res.status(404).send("Breaddit not found!");
+  }
+};
+
+const deleteBreaddit = async (req, res) => {
+  const breadditId = req.params.id;
+  const filteredPosts = breadditdata.filter(post => post.id !== breadditId);
+  const posts = breadditdata.find(post => post.id === breadditId);
+
+  if (posts) {
+    return res.json(filteredPosts);
+  } else {
+    res.status(404).send("Breaddit not found!");
+  }
+};
+
 const postBreaddit = async (req, res) => {
   const id = breadditdata.length + 1;
 
@@ -31,5 +69,8 @@ const postBreaddit = async (req, res) => {
 
 module.exports = {
   breadditController,
-  postBreaddit
+  postBreaddit,
+  getBreadditById,
+  updateBreaddit,
+  deleteBreaddit
 };
