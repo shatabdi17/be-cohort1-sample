@@ -1,9 +1,9 @@
 const fs = require("fs");
 const { promisify } = require("util");
+const writeFile = promisify(fs.writeFile);
+const { validationResult } = require("express-validator");
 
 const breadditdata = require("../../../db/breaddit.data.json");
-
-const writeFile = promisify(fs.writeFile);
 
 const breadditController = (req, res) => {
   return res.json({
@@ -50,6 +50,10 @@ const deleteBreaddit = async (req, res) => {
 };
 
 const postBreaddit = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
   const id = breadditdata.length + 1;
 
   const postBreadditData = {
