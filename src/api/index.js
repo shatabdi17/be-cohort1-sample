@@ -5,6 +5,6 @@ const { breadditRouter } = require("../routes/breaddit/breaddit.router");
 
 const router = express.Router();
 router.use("/health", healthRouter);
-router.use("/postbreaddit", breadditRouter);
+router.use("/post", breadditRouter);
 
 module.exports = router;

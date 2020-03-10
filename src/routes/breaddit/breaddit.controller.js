@@ -5,13 +5,13 @@ const { validationResult } = require("express-validator");
 
 const breadditdata = require("../../../db/breaddit.data.json");
 
-const breadditController = (req, res) => {
+const getPost = (req, res) => {
   return res.json({
     data: breadditdata
   });
 };
 
-const getBreadditById = (req, res) => {
+const getPostById = (req, res) => {
   const breadditId = req.params.id;
 
   const posts = breadditdata.find(post => post.id === breadditId);
@@ -22,7 +22,7 @@ const getBreadditById = (req, res) => {
     res.status(404).send("Breaddit not found!");
   }
 };
-const updateBreaddit = (req, res) => {
+const updatePost = (req, res) => {
   const breadditId = req.params.id;
   const breaddit = req.body;
   const posts = breadditdata.find(post => post.id === breadditId);
@@ -37,7 +37,7 @@ const updateBreaddit = (req, res) => {
   }
 };
 
-const deleteBreaddit = async (req, res) => {
+const deletePost = async (req, res) => {
   const breadditId = req.params.id;
   const filteredPosts = breadditdata.filter(post => post.id !== breadditId);
   const posts = breadditdata.find(post => post.id === breadditId);
@@ -49,7 +49,7 @@ const deleteBreaddit = async (req, res) => {
   }
 };
 
-const postBreaddit = async (req, res) => {
+const post = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -72,9 +72,9 @@ const postBreaddit = async (req, res) => {
 };
 
 module.exports = {
-  breadditController,
-  postBreaddit,
-  getBreadditById,
-  updateBreaddit,
-  deleteBreaddit
+  getPost,
+  post,
+  getPostById,
+  updatePost,
+  deletePost
 };

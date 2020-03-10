@@ -2,11 +2,11 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const {
-  breadditController,
-  postBreaddit,
-  getBreadditById,
-  updateBreaddit,
-  deleteBreaddit
+  getPost,
+  getPostById,
+  post,
+  updatePost,
+  deletePost
 } = require("./breaddit.controller");
 
 const postValidator = [
@@ -24,11 +24,11 @@ const postValidator = [
 const { validateBody } = require("../../middleware/validate-body");
 const router = express.Router();
 
-router.get("", breadditController);
-router.get("/:id", getBreadditById);
-router.post("", postValidator, validateBody, postBreaddit);
-router.put("", updateBreaddit);
-router.delete("", deleteBreaddit);
+router.get("", getPost);
+router.get("/:id", getPostById);
+router.post("", postValidator, validateBody, post);
+router.put("/:id", updatePost);
+router.delete("/:id", deletePost);
 
 module.exports = {
   breadditRouter: router
