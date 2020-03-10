@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
 
 const router = require("./api");
 const { logger } = require("./utils/logger");
@@ -15,6 +16,7 @@ logger.info("🤖 Initializing middleware");
 
 app.use(morgan("tiny", { stream: logger.stream }));
 app.use("/", router);
+app.use(bodyParser.json());
 app.use(errorHandler);
 
 // Serve the application at the given port
